@@ -1,0 +1,611 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Google.Apis.Vision.v1</name>
+    </assembly>
+    <members>
+        <member name="T:Google.Apis.Vision.v1.VisionService">
+            <summary>The Vision Service.</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionService.Version">
+            <summary>The API version.</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionService.DiscoveryVersionUsed">
+            <summary>The discovery version used to generate this service.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.VisionService.#ctor">
+            <summary>Constructs a new service.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.VisionService.#ctor(Google.Apis.Services.BaseClientService.Initializer)">
+            <summary>Constructs a new service.</summary>
+            <param name="initializer">The service initializer.</param>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionService.Features">
+            <summary>Gets the service supported features.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionService.Name">
+            <summary>Gets the service name.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionService.BaseUri">
+            <summary>Gets the service base URI.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionService.BasePath">
+            <summary>Gets the service base path.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.VisionService.Scope">
+            <summary>Available OAuth 2.0 scopes for use with the Google Cloud Vision API.</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionService.Scope.CloudPlatform">
+            <summary>View and manage your data across Google Cloud Platform services</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionService.Images">
+            <summary>Gets the Images resource.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.VisionBaseServiceRequest`1">
+            <summary>A base abstract class for Vision requests.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.#ctor(Google.Apis.Services.IClientService)">
+            <summary>Constructs a new VisionBaseServiceRequest instance.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.Xgafv">
+            <summary>V1 error format.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.XgafvEnum">
+            <summary>V1 error format.</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.XgafvEnum.Value1">
+            <summary>v1 error format</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.XgafvEnum.Value2">
+            <summary>v2 error format</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.AccessToken">
+            <summary>OAuth access token.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.Alt">
+            <summary>Data format for response.</summary>
+            [default: json]
+        </member>
+        <member name="T:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.AltEnum">
+            <summary>Data format for response.</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.AltEnum.Json">
+            <summary>Responses with Content-Type of application/json</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.AltEnum.Media">
+            <summary>Media download with context-dependent Content-Type</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.AltEnum.Proto">
+            <summary>Responses with Content-Type of application/x-protobuf</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.BearerToken">
+            <summary>OAuth bearer token.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.Callback">
+            <summary>JSONP</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.Fields">
+            <summary>Selector specifying which fields to include in a partial response.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.Key">
+            <summary>API key. Your API key identifies your project and provides you with API access, quota, and reports.
+            Required unless you provide an OAuth 2.0 token.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.OauthToken">
+            <summary>OAuth 2.0 token for the current user.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.Pp">
+            <summary>Pretty-print response.</summary>
+            [default: true]
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.PrettyPrint">
+            <summary>Returns response with indentations and line breaks.</summary>
+            [default: true]
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.QuotaUser">
+            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
+            assigned to a user, but should not exceed 40 characters.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.UploadType">
+            <summary>Legacy upload protocol for media (e.g. "media", "multipart").</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.UploadProtocol">
+            <summary>Upload protocol for media (e.g. "raw", "multipart").</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.VisionBaseServiceRequest`1.InitParameters">
+            <summary>Initializes Vision parameter list.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.ImagesResource">
+            <summary>The "images" collection of methods.</summary>
+        </member>
+        <member name="F:Google.Apis.Vision.v1.ImagesResource.service">
+            <summary>The service which this resource belongs to.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.ImagesResource.#ctor(Google.Apis.Services.IClientService)">
+            <summary>Constructs a new resource.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.ImagesResource.Annotate(Google.Apis.Vision.v1.Data.BatchAnnotateImagesRequest)">
+            <summary>Run image detection and annotation for a batch of images.</summary>
+            <param name="body">The body of the request.</param>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest">
+            <summary>Run image detection and annotation for a batch of images.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest.#ctor(Google.Apis.Services.IClientService,Google.Apis.Vision.v1.Data.BatchAnnotateImagesRequest)">
+            <summary>Constructs a new Annotate request.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest.Body">
+            <summary>Gets or sets the body of this request.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest.GetBody">
+            <summary>Returns the body of the request.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest.MethodName">
+            <summary>Gets the method name.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest.HttpMethod">
+            <summary>Gets the HTTP method.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest.RestPath">
+            <summary>Gets the REST path.</summary>
+        </member>
+        <member name="M:Google.Apis.Vision.v1.ImagesResource.AnnotateRequest.InitParameters">
+            <summary>Initializes Annotate parameter list.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.AnnotateImageRequest">
+            <summary>Request for performing Google Cloud Vision API tasks over a user-provided image, with user-requested
+            features.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageRequest.Features">
+            <summary>Requested features.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageRequest.Image">
+            <summary>The image to be processed.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageRequest.ImageContext">
+            <summary>Additional context that may accompany the image.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageRequest.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.AnnotateImageResponse">
+            <summary>Response to an image annotation request.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.Error">
+            <summary>If set, represents the error message for the operation. Note that filled-in mage annotations are
+            guaranteed to be correct, even when error is non-empty.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.FaceAnnotations">
+            <summary>If present, face detection completed successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.ImagePropertiesAnnotation">
+            <summary>If present, image properties were extracted successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.LabelAnnotations">
+            <summary>If present, label detection completed successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.LandmarkAnnotations">
+            <summary>If present, landmark detection completed successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.LogoAnnotations">
+            <summary>If present, logo detection completed successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.SafeSearchAnnotation">
+            <summary>If present, safe-search annotation completed successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.TextAnnotations">
+            <summary>If present, text (OCR) detection completed successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.AnnotateImageResponse.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.BatchAnnotateImagesRequest">
+            <summary>Multiple image annotation requests are batched into a single service call.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.BatchAnnotateImagesRequest.Requests">
+            <summary>Individual image annotation requests for this batch.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.BatchAnnotateImagesRequest.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.BatchAnnotateImagesResponse">
+            <summary>Response to a batch image annotation request.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.BatchAnnotateImagesResponse.Responses">
+            <summary>Individual responses to image annotation requests within the batch.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.BatchAnnotateImagesResponse.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.BoundingPoly">
+            <summary>A bounding polygon for the detected image annotation.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.BoundingPoly.Vertices">
+            <summary>The bounding polygon vertices.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.BoundingPoly.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Google.Apis.Vision.v1.Data.Color" -->
+        <member name="P:Google.Apis.Vision.v1.Data.Color.Alpha">
+             <summary>The fraction of this color that should be applied to the pixel. That is, the final pixel color is
+             defined by the equation:
+            
+             pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
+            
+             This means that a value of 1.0 corresponds to a solid color, whereas a value of 0.0 corresponds to a
+             completely transparent color. This uses a wrapper message rather than a simple float scalar so that it is
+             possible to distinguish between a default value and the value being unset. If omitted, this color object is
+             to be rendered as a solid color (as if the alpha value had been explicitly given with a value of
+             1.0).</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Color.Blue">
+            <summary>The amount of blue in the color as a value in the interval [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Color.Green">
+            <summary>The amount of green in the color as a value in the interval [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Color.Red">
+            <summary>The amount of red in the color as a value in the interval [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Color.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.ColorInfo">
+            <summary>Color information consists of RGB channels, score and fraction of image the color occupies in the
+            image.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ColorInfo.Color">
+            <summary>RGB components of the color.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ColorInfo.PixelFraction">
+            <summary>Stores the fraction of pixels the color occupies in the image. Value in range [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ColorInfo.Score">
+            <summary>Image-specific score for this color. Value in range [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ColorInfo.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.DominantColorsAnnotation">
+            <summary>Set of dominant colors and their corresponding scores.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.DominantColorsAnnotation.Colors">
+            <summary>RGB color values, with their score and pixel fraction.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.DominantColorsAnnotation.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.EntityAnnotation">
+            <summary>Set of detected entity features.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.BoundingPoly">
+            <summary>Image region to which this entity belongs. Not filled currently for `LABEL_DETECTION` features. For
+            `TEXT_DETECTION` (OCR), `boundingPoly`s are produced for the entire text detected in an image region,
+            followed by `boundingPoly`s for each word within the detected text.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Confidence">
+            <summary>The accuracy of the entity detection in an image. For example, for an image containing 'Eiffel
+            Tower,' this field represents the confidence that there is a tower in the query image. Range [0,
+            1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Description">
+            <summary>Entity textual description, expressed in its locale language.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Locale">
+            <summary>The language code for the locale in which the entity textual description (next field) is
+            expressed.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Locations">
+            <summary>The location information for the detected entity. Multiple LocationInfo elements can be present
+            since one location may indicate the location of the scene in the query image, and another the location of
+            the place where the query image was taken. Location information is usually present for landmarks.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Mid">
+            <summary>Opaque entity ID. Some IDs might be available in Knowledge Graph(KG). For more details on KG please
+            see: https://developers.google.com/knowledge-graph/</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Properties">
+            <summary>Some entities can have additional optional Property fields. For example a different kind of score
+            or string that qualifies the entity.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Score">
+            <summary>Overall score of the result. Range [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.Topicality">
+            <summary>The relevancy of the ICA (Image Content Annotation) label to the image. For example, the relevancy
+            of 'tower' to an image containing 'Eiffel Tower' is likely higher than an image containing a distant
+            towering building, though the confidence that there is a tower may be the same. Range [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.EntityAnnotation.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.FaceAnnotation">
+            <summary>A face annotation object contains the results of face detection.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.AngerLikelihood">
+            <summary>Anger likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.BlurredLikelihood">
+            <summary>Blurred likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.BoundingPoly">
+            <summary>The bounding polygon around the face. The coordinates of the bounding box are in the original
+            image's scale, as returned in ImageParams. The bounding box is computed to "frame" the face in accordance
+            with human expectations. It is based on the landmarker results. Note that one or more x and/or y coordinates
+            may not be generated in the BoundingPoly (the polygon will be unbounded) if only a partial face appears in
+            the image to be annotated.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.DetectionConfidence">
+            <summary>Detection confidence. Range [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.FdBoundingPoly">
+            <summary>This bounding polygon is tighter than the previous boundingPoly, and encloses only the skin part of
+            the face. Typically, it is used to eliminate the face from any image analysis that detects the "amount of
+            skin" visible in an image. It is not based on the landmarker results, only on the initial face detection,
+            hence the fd (face detection) prefix.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.HeadwearLikelihood">
+            <summary>Headwear likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.JoyLikelihood">
+            <summary>Joy likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.LandmarkingConfidence">
+            <summary>Face landmarking confidence. Range [0, 1].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.Landmarks">
+            <summary>Detected face landmarks.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.PanAngle">
+            <summary>Yaw angle. Indicates the leftward/rightward angle that the face is pointing, relative to the
+            vertical plane perpendicular to the image. Range [-180,180].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.RollAngle">
+            <summary>Roll angle. Indicates the amount of clockwise/anti-clockwise rotation of the face relative to the
+            image vertical, about the axis perpendicular to the face. Range [-180,180].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.SorrowLikelihood">
+            <summary>Sorrow likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.SurpriseLikelihood">
+            <summary>Surprise likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.TiltAngle">
+            <summary>Pitch angle. Indicates the upwards/downwards angle that the face is pointing relative to the
+            image's horizontal plane. Range [-180,180].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.UnderExposedLikelihood">
+            <summary>Under-exposed likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.FaceAnnotation.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.Feature">
+            <summary>The Feature indicates what type of image detection task to perform. Users describe the type of Google
+            Cloud Vision API tasks to perform over images by using Features. Features encode the Cloud Vision API vertical
+            to operate on and the number of top-scoring results to return.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Feature.MaxResults">
+            <summary>Maximum number of results of this type.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Feature.Type">
+            <summary>The feature type.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Feature.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.Image">
+            <summary>Client image to perform Google Cloud Vision API tasks over.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Image.Content">
+            <summary>Image content, represented as a stream of bytes. Note: as with all `bytes` fields, protobuffers use
+            a pure binary representation, whereas JSON representations use base64.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Image.Source">
+            <summary>Google Cloud Storage image location. If both 'content' and 'source' are filled for an image,
+            'content' takes precedence and it will be used for performing the image annotation request.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Image.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.ImageContext">
+            <summary>Image context.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ImageContext.LanguageHints">
+            <summary>List of languages to use for TEXT_DETECTION. In most cases, an empty value yields the best results
+            since it enables automatic language detection. For languages based on the Latin alphabet, setting
+            `language_hints` is not needed. In rare cases, when the language of the text in the image is known, setting
+            a hint will help get better results (although it will be a significant hindrance if the hint is wrong). Text
+            detection returns an error if one or more of the specified languages is not one of the [supported
+            languages](/translate/v2/translate-reference#supported_languages).</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ImageContext.LatLongRect">
+            <summary>Lat/long rectangle that specifies the location of the image.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ImageContext.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.ImageProperties">
+            <summary>Stores image properties (e.g. dominant colors).</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ImageProperties.DominantColors">
+            <summary>If present, dominant colors completed successfully.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ImageProperties.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.ImageSource">
+            <summary>External image source (Google Cloud Storage image location).</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ImageSource.GcsImageUri">
+            <summary>Google Cloud Storage image URI. It must be in the following form: `gs://bucket_name/object_name`.
+            For more details, please see: https://cloud.google.com/storage/docs/reference-uris. NOTE: Cloud Storage
+            object versioning is not supported!</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.ImageSource.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Google.Apis.Vision.v1.Data.Landmark" -->
+        <member name="P:Google.Apis.Vision.v1.Data.Landmark.Position">
+            <summary>Face landmark position.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Landmark.Type">
+            <summary>Face landmark type.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Landmark.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Google.Apis.Vision.v1.Data.LatLng" -->
+        <member name="P:Google.Apis.Vision.v1.Data.LatLng.Latitude">
+            <summary>The latitude in degrees. It must be in the range [-90.0, +90.0].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.LatLng.Longitude">
+            <summary>The longitude in degrees. It must be in the range [-180.0, +180.0].</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.LatLng.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.LatLongRect">
+            <summary>Rectangle determined by min and max LatLng pairs.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.LatLongRect.MaxLatLng">
+            <summary>Max lat/long pair.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.LatLongRect.MinLatLng">
+            <summary>Min lat/long pair.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.LatLongRect.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.LocationInfo">
+            <summary>Detected entity location information.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.LocationInfo.LatLng">
+            <summary>Lat - long location coordinates.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.LocationInfo.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.Position">
+            <summary>A 3D position in the image, used primarily for Face detection landmarks. A valid Position must have
+            both x and y coordinates. The position coordinates are in the same scale as the original image.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Position.X">
+            <summary>X coordinate.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Position.Y">
+            <summary>Y coordinate.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Position.Z">
+            <summary>Z coordinate (or depth).</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Position.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.Property">
+            <summary>Arbitrary name/value pair.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Property.Name">
+            <summary>Name of the property.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Property.Value">
+            <summary>Value of the property.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Property.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.SafeSearchAnnotation">
+            <summary>Set of features pertaining to the image, computed by various computer vision methods over safe-search
+            verticals (for example, adult, spoof, medical, violence).</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.SafeSearchAnnotation.Adult">
+            <summary>Represents the adult contents likelihood for the image.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.SafeSearchAnnotation.Medical">
+            <summary>Likelihood this is a medical image.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.SafeSearchAnnotation.Spoof">
+            <summary>Spoof likelihood. The likelihood that an obvious modification was made to the image's canonical
+            version to make it appear funny or offensive.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.SafeSearchAnnotation.Violence">
+            <summary>Violence likelihood.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.SafeSearchAnnotation.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.Status">
+             <summary>The `Status` type defines a logical error model that is suitable for different programming
+             environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). The error model
+             is designed to be:
+            
+             - Simple to use and understand for most users - Flexible enough to meet unexpected needs
+            
+             # Overview
+            
+             The `Status` message contains three pieces of data: error code, error message, and error details. The error code
+             should be an enum value of google.rpc.Code, but it may accept additional error codes if needed.  The error
+             message should be a developer-facing English message that helps developers *understand* and *resolve* the error.
+             If a localized user-facing error message is needed, put the localized message in the error details or localize
+             it in the client. The optional error details may contain arbitrary information about the error. There is a
+             predefined set of error detail types in the package `google.rpc` which can be used for common error conditions.
+            
+             # Language mapping
+            
+             The `Status` message is the logical representation of the error model, but it is not necessarily the actual wire
+             format. When the `Status` message is exposed in different client libraries and different wire protocols, it can
+             be mapped differently. For example, it will likely be mapped to some exceptions in Java, but more likely mapped
+             to some error codes in C.
+            
+             # Other uses
+            
+             The error model and the `Status` message can be used in a variety of environments, either with or without APIs,
+             to provide a consistent developer experience across different environments.
+            
+             Example uses of this error model include:
+            
+             - Partial errors. If a service needs to return partial errors to the client, it may embed the `Status` in the
+             normal response to indicate the partial errors.
+            
+             - Workflow errors. A typical workflow has multiple steps. Each step may have a `Status` message for error
+             reporting purpose.
+            
+             - Batch operations. If a client uses batch request and batch response, the `Status` message should be used
+             directly inside batch response, one for each error sub-response.
+            
+             - Asynchronous operations. If an API call embeds asynchronous operation results in its response, the status of
+             those operations should be represented directly using the `Status` message.
+            
+             - Logging. If some API errors are stored in logs, the message `Status` could be used directly after any
+             stripping needed for security/privacy reasons.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Status.Code">
+            <summary>The status code, which should be an enum value of google.rpc.Code.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Status.Details">
+            <summary>A list of messages that carry the error details.  There will be a common set of message types for
+            APIs to use.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Status.Message">
+            <summary>A developer-facing error message, which should be in English. Any user-facing error message should
+            be localized and sent in the google.rpc.Status.details field, or localized by the client.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Status.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.Vision.v1.Data.Vertex">
+            <summary>A vertex represents a 2D point in the image. NOTE: the vertex coordinates are in the same scale as the
+            original image.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Vertex.X">
+            <summary>X coordinate.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Vertex.Y">
+            <summary>Y coordinate.</summary>
+        </member>
+        <member name="P:Google.Apis.Vision.v1.Data.Vertex.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+    </members>
+</doc>
