@@ -47,6 +47,6 @@ C:\Projects\tesseract\src\Tesseract.WebDemo\bin\log4net.xml
 C:\Projects\tesseract\src\Tesseract.WebDemo\bin\Newtonsoft.Json.xml
 C:\Projects\tesseract\src\Tesseract.WebDemo\bin\Tesseract.xml
 C:\Projects\tesseract\src\Tesseract.WebDemo\bin\Zlib.Portable.xml
-C:\Projects\tesseract\src\Tesseract.WebDemo\obj\Debug\Tesseract.WebDemo.csprojResolveAssemblyReference.cache
 C:\Projects\tesseract\src\Tesseract.WebDemo\obj\Debug\Tesseract.WebDemo.dll
 C:\Projects\tesseract\src\Tesseract.WebDemo\obj\Debug\Tesseract.WebDemo.pdb
+C:\Projects\tesseract\src\Tesseract.WebDemo\obj\Debug\Tesseract.WebDemo.csprojResolveAssemblyReference.cache

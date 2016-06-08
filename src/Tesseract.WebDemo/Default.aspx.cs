@@ -17,6 +17,10 @@ using System.Text;
 using System.Net;
 using OCRWebServiceREST.Client;
 using Newtonsoft.Json;
+using Google.Apis.Vision.v1;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Vision.v1.Data;
 
 namespace Tesseract.WebDemo
 {
@@ -36,9 +40,12 @@ namespace Tesseract.WebDemo
       protected HtmlGenericControl meanConfidenceLabel;
       protected HtmlTextArea resultText;
       protected HtmlTextArea tesseractResult;
+      protected HtmlTextArea googleOCRResult;
       protected HtmlButton restartButton;
 
       protected TesseractEngine _tesseractEngine;
+
+      protected VisionService _visionService;
 
       protected StringBuilder _ocrResult;
       protected string _folderPath = @"~/TempFiles/";
@@ -53,7 +60,7 @@ namespace Tesseract.WebDemo
       #region Constructor
       public DefaultPage()
       {
-
+         _visionService = CreateAuthorizedClient();
          _tesseractEngine = new TesseractEngine(Server.MapPath(@"~/tessdata"), "por");
       }
       #endregion
@@ -64,6 +71,7 @@ namespace Tesseract.WebDemo
       {
          TesseractMethods();
          OCRWebServicesMethods();
+         GoogleOCRMethods();
       }
 
       private void OCRWebServicesMethods()
@@ -77,13 +85,11 @@ namespace Tesseract.WebDemo
             uploadedFile.PostedFile.SaveAs(fullPath);
 
             Console.WriteLine("Process document using OCRWebService.com (REST API)\n");
-
-
+            
             // Process Document 
             ProcessDocument(USER_NAME, LICENSE_CODE, fullPath);
 
-            // Get Account information
-            PrintAccountInformation(USER_NAME, LICENSE_CODE);
+            File.Delete(fullPath);
          }
       }
 
@@ -131,37 +137,6 @@ namespace Tesseract.WebDemo
 
                PrintOCRData(ocrResponse);
             }
-         }
-         catch (WebException wex)
-         {
-            Console.WriteLine(string.Format("OCR API Error. HTTPCode:{0}", ((HttpWebResponse)wex.Response).StatusCode));
-         }
-      }
-
-      /// <summary>
-      /// Print OCRWebService.com account information
-      /// </summary>
-      /// <param name="user_name"></param>
-      /// <param name="license_code"></param>
-      private static void PrintAccountInformation(string user_name, string license_code)
-      {
-         try
-         {
-            string address_get = @"http://www.ocrwebservice.com/restservices/getAccountInformation";
-
-            HttpWebRequest request_get = CreateHttpRequest(address_get, user_name, license_code, "GET");
-
-            using (HttpWebResponse response = request_get.GetResponse() as HttpWebResponse)
-            {
-               string strJSON = new StreamReader(response.GetResponseStream()).ReadToEnd();
-               OCRResponseAccountInfo ocrResponse = JsonConvert.DeserializeObject<OCRResponseAccountInfo>(strJSON);
-
-               Console.WriteLine(string.Format("Available pages:{0}", ocrResponse.AvailablePages));
-               Console.WriteLine(string.Format("Max pages:{0}", ocrResponse.MaxPages));
-               Console.WriteLine(string.Format("Expiration date:{0}", ocrResponse.ExpirationDate));
-               Console.WriteLine(string.Format("Last processing time:{0}", ocrResponse.LastProcessingTime));
-            }
-
          }
          catch (WebException wex)
          {
@@ -272,11 +247,96 @@ namespace Tesseract.WebDemo
          resultPanel.Visible = true;
       }
 
+      public void GoogleOCRMethods()
+      {
+         if (uploadedFile.PostedFile != null && uploadedFile.PostedFile.ContentLength > 0)
+         {
+            _ocrResult = new StringBuilder();
+
+            string fileName = uploadedFile.PostedFile.FileName;
+            string fullPath = Server.MapPath(_folderPath) + fileName;
+            uploadedFile.PostedFile.SaveAs(fullPath);
+            Dictionary<string, System.Drawing.Image> images = PdfImageExtractor.ExtractImages(fullPath);
+            if (images != null && images.Count > 0)
+            {
+               // for now just fail hard if there's any error however in a proper app I would expect a full demo.
+               foreach (var image in images)
+               {
+                  Bitmap bitmap = new Bitmap(image.Value);
+                  string imagePath = Server.MapPath(_folderPath) + "img_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+                  bitmap.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+                  IList<AnnotateImageResponse> result = ExtractTextsByGoogleOCR(_visionService, imagePath);
+                  if (result != null)
+                  {
+                     Console.WriteLine("Labels for image: " + imagePath);
+                     // Loop through and output label annotations for the image
+                     foreach (var response in result)
+                     {
+                        //foreach (var text in response.TextAnnotations)
+                        //{
+                        if (response != null && response.TextAnnotations != null )
+                        _ocrResult.Append(response.TextAnnotations[0].Description);
+                        //}
+                     }
+                  }
+                  File.Delete(imagePath);
+               }
+               googleOCRResult.InnerText = _ocrResult.ToString();
+            }
+            inputPanel.Visible = false;
+            resultPanel.Visible = true;
+
+         }
+      }
+
       private void OnRestartClicked(object sender, EventArgs args)
       {
          resultPanel.Visible = false;
          inputPanel.Visible = true;
       }
+
+         
+      public VisionService CreateAuthorizedClient()
+      {
+         GoogleCredential credential = GoogleCredential.GetApplicationDefaultAsync().Result;
+         // Inject the Cloud Vision scopes
+         if (credential.IsCreateScopedRequired)
+         {
+            credential = credential.CreateScoped(new[]
+            {
+                    VisionService.Scope.CloudPlatform
+                });
+         }
+         return new VisionService(new BaseClientService.Initializer
+         {
+            HttpClientInitializer = credential,
+            GZipEnabled = false
+         });
+      }
+
+      public IList<AnnotateImageResponse> ExtractTextsByGoogleOCR(VisionService vision, string imagePath)
+      {
+         Console.WriteLine("Detecting Texts...");
+         // Convert image to Base64 encoded for JSON ASCII text based request   
+         byte[] imageArray = File.ReadAllBytes(imagePath);
+         string imageContent = Convert.ToBase64String(imageArray);
+         // Post label detection request to the Vision API
+         // [START construct_request]
+         var responses = vision.Images.Annotate(
+             new BatchAnnotateImagesRequest()
+             {
+                Requests = new[] {
+                    new AnnotateImageRequest() {
+                        Features = new [] { new Feature() { Type =
+                          "TEXT_DETECTION"}},
+                        Image = new Google.Apis.Vision.v1.Data.Image() { Content = imageContent }
+                    }
+            }
+             }).Execute();
+         return responses.Responses;
+         // [END construct_request]
+      }
+
 
       #endregion
 

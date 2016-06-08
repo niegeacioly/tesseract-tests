@@ -44,7 +44,7 @@
             <fieldset>
                <legend>OCR Results</legend>
                <div class="form-group">
-                  <label for="result" runat="server">Mean Confidence:</label>
+                  <label for="result" runat="server">Mean Confidence of OCR Web Service:</label>
                   <label class="form-control" id="meanConfidenceLabel" runat="server" />
                </div>
                <div class="form-group">
@@ -52,6 +52,8 @@
                   <textarea class="form-control" rows="10" id="resultText" readonly="readonly" runat="server"></textarea>
                   <label for="result" runat="server">Tesseract</label>
                   <textarea class="form-control" rows="10" id="tesseractResult" readonly="readonly" runat="server"></textarea>
+                  <label for="result" runat="server">Google OCR</label>
+                  <textarea class="form-control" rows="10" id="googleOCRResult" readonly="readonly" runat="server"></textarea>
                </div>
                <button id="restartButton" type="submit" class="btn btn-default" runat="server">Restart</button>
             </fieldset>
