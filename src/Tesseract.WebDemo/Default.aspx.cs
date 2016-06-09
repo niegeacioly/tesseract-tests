@@ -8,8 +8,6 @@ using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
 using System.IO;
 using System.Collections.Generic;
 using Tesseract.WebDemo.Utils;
@@ -21,6 +19,8 @@ using Google.Apis.Vision.v1;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Vision.v1.Data;
+using Ghostscript.NET.Rasterizer;
+using System.Text.RegularExpressions;
 
 namespace Tesseract.WebDemo
 {
@@ -32,7 +32,7 @@ namespace Tesseract.WebDemo
       #region Data
       // input panel controls
       protected Panel inputPanel;
-      protected HtmlInputFile uploadedFile;
+      protected FileUpload uploadedFile;
       protected HtmlButton submitFile;
 
       // result panel controls
@@ -42,18 +42,21 @@ namespace Tesseract.WebDemo
       protected HtmlTextArea tesseractResult;
       protected HtmlTextArea googleOCRResult;
       protected HtmlButton restartButton;
+      protected HtmlButton downloadButton;
 
       protected TesseractEngine _tesseractEngine;
 
       protected VisionService _visionService;
 
-      protected StringBuilder _ocrResult;
+      protected string _ocrResult;
       protected string _folderPath = @"~/TempFiles/";
 
       protected double DEFAULT_SCALE = 203 / 96;
 
       protected string USER_NAME = "NIEGECOSTA";
       protected string LICENSE_CODE = "18CB0BF6-AE7B-49CD-8690-5EB4B43FF4C0";
+
+      protected string _outputFile = string.Empty;
 
       #endregion
 
@@ -69,8 +72,8 @@ namespace Tesseract.WebDemo
 
       private void OnSubmitFileClicked(object sender, EventArgs args)
       {
-         TesseractMethods();
-         OCRWebServicesMethods();
+         //TesseractMethods();
+         //OCRWebServicesMethods();
          GoogleOCRMethods();
       }
 
@@ -78,14 +81,14 @@ namespace Tesseract.WebDemo
       {
          if (uploadedFile.PostedFile != null && uploadedFile.PostedFile.ContentLength > 0)
          {
-            _ocrResult = new StringBuilder();
+            _ocrResult = string.Empty;
 
             string fileName = uploadedFile.PostedFile.FileName;
             string fullPath = Server.MapPath(_folderPath) + fileName;
             uploadedFile.PostedFile.SaveAs(fullPath);
 
             Console.WriteLine("Process document using OCRWebService.com (REST API)\n");
-            
+
             // Process Document 
             ProcessDocument(USER_NAME, LICENSE_CODE, fullPath);
 
@@ -108,7 +111,6 @@ namespace Tesseract.WebDemo
 
          // Convert first 5 pages of multipage document into doc and txt
          // ocrURL = @"http://www.ocrwebservice.com/restservices/processDocument?language=english&pagerange=1-5&outputformat=doc,txt";
-
 
          byte[] uploadData = File.ReadAllBytes(fullPath);
          /*GetUploadedFile(file_path);*/
@@ -163,7 +165,7 @@ namespace Tesseract.WebDemo
 
       private void PrintOCRData(OCRResponseData ocrResponse)
       {
-         _ocrResult = new StringBuilder();
+         _ocrResult = string.Empty;
          // Available pages
          Console.WriteLine("Available pages: " + ocrResponse.AvailablePages);
 
@@ -171,7 +173,7 @@ namespace Tesseract.WebDemo
          {
             for (int page = 0; page < ocrResponse.OCRText[zone].Count; page++)
             {
-               _ocrResult.Append(ocrResponse.OCRText[zone][page]);
+               _ocrResult += ocrResponse.OCRText[zone][page];
             }
          }
 
@@ -192,11 +194,13 @@ namespace Tesseract.WebDemo
          }
       }
 
+
+
       private void TesseractMethods()
       {
          if (uploadedFile.PostedFile != null && uploadedFile.PostedFile.ContentLength > 0)
          {
-            _ocrResult = new StringBuilder();
+            _ocrResult = string.Empty;
 
             string fileName = uploadedFile.PostedFile.FileName;
             string fullPath = Server.MapPath(_folderPath) + fileName;
@@ -216,8 +220,8 @@ namespace Tesseract.WebDemo
                      meanConfidenceLabel.InnerText = string.Format("{0:P}", page.GetMeanConfidence());
                      if (page.GetMeanConfidence() > 0.85f)
                      {
-                        _ocrResult.Append(page.GetText());
-                        _ocrResult.Append("\n");
+                        _ocrResult += page.GetText();
+                        _ocrResult += "\n";
                      }
                      else
                      {
@@ -229,8 +233,8 @@ namespace Tesseract.WebDemo
                         using (var newPageTransformed = _tesseractEngine.Process(newBitmap))
                         {
                            meanConfidenceLabel.InnerText = string.Format("{0:P}", page.GetMeanConfidence());
-                           _ocrResult.Append(page.GetText());
-                           _ocrResult.Append("\n");
+                           _ocrResult += page.GetText();
+                           _ocrResult += "\n";
                         }
                      }
                   }
@@ -247,45 +251,84 @@ namespace Tesseract.WebDemo
          resultPanel.Visible = true;
       }
 
+      public Dictionary<string, System.Drawing.Image> ConvertPDFToImage(string fullPath)
+      {
+
+         Dictionary<string, System.Drawing.Image> capturedImages = new Dictionary<string, System.Drawing.Image>();
+         int desired_x_dpi = 200;
+         int desired_y_dpi = 200;
+
+         string outputPath = Server.MapPath(_folderPath);
+
+         using (var rasterizer = new GhostscriptRasterizer())
+         {
+            rasterizer.Open(fullPath);
+
+            for (var pageNumber = 1; pageNumber <= rasterizer.PageCount; pageNumber++)
+            {
+               var pageFilePath = Path.Combine(outputPath, string.Format("Page-{0}.png", pageNumber));
+
+               var img = rasterizer.GetPage(desired_x_dpi, desired_y_dpi, pageNumber);
+               img.Save(pageFilePath, System.Drawing.Imaging.ImageFormat.Png);
+               capturedImages.Add(pageFilePath, img);
+            }
+         }
+
+         return capturedImages;
+      }
+
       public void GoogleOCRMethods()
       {
          if (uploadedFile.PostedFile != null && uploadedFile.PostedFile.ContentLength > 0)
          {
-            _ocrResult = new StringBuilder();
-
+            _ocrResult = string.Empty;
+            Dictionary<string, System.Drawing.Image> images = null;
+            string contentType = uploadedFile.PostedFile.ContentType;
             string fileName = uploadedFile.PostedFile.FileName;
             string fullPath = Server.MapPath(_folderPath) + fileName;
             uploadedFile.PostedFile.SaveAs(fullPath);
-            Dictionary<string, System.Drawing.Image> images = PdfImageExtractor.ExtractImages(fullPath);
+            if (contentType.Equals("application/pdf"))
+            {
+               images = ConvertPDFToImage(fullPath);
+            }
+            else
+            {
+               System.Drawing.Image catchedImage = System.Drawing.Image.FromFile(fullPath);
+               images = new Dictionary<string, System.Drawing.Image>(1);
+               images.Add(fullPath, catchedImage);
+            }
             if (images != null && images.Count > 0)
             {
                // for now just fail hard if there's any error however in a proper app I would expect a full demo.
                foreach (var image in images)
                {
                   Bitmap bitmap = new Bitmap(image.Value);
-                  string imagePath = Server.MapPath(_folderPath) + "img_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
-                  bitmap.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
-                  IList<AnnotateImageResponse> result = ExtractTextsByGoogleOCR(_visionService, imagePath);
+                  IList<AnnotateImageResponse> result = ExtractTextsByGoogleOCR(_visionService, image.Key);
+
                   if (result != null)
                   {
-                     Console.WriteLine("Labels for image: " + imagePath);
                      // Loop through and output label annotations for the image
                      foreach (var response in result)
                      {
                         //foreach (var text in response.TextAnnotations)
                         //{
-                        if (response != null && response.TextAnnotations != null )
-                        _ocrResult.Append(response.TextAnnotations[0].Description);
+                        if (response != null && response.TextAnnotations != null)
+                           _ocrResult += (response.TextAnnotations[0].Description);
                         //}
                      }
                   }
-                  File.Delete(imagePath);
+                  File.Delete(image.Key);
+                  image.Value.Dispose();
                }
-               googleOCRResult.InnerText = _ocrResult.ToString();
+               googleOCRResult.InnerText = _ocrResult;
+               fileName = fileName.Substring(0, fileName.IndexOf(".")) + ".txt";
+               _outputFile = Server.MapPath(_folderPath) + fileName;
+               File.WriteAllText(_outputFile, _ocrResult);
+               HttpContext.Current.Session["output"] = fileName;
             }
+            File.Delete(fullPath);
             inputPanel.Visible = false;
             resultPanel.Visible = true;
-
          }
       }
 
@@ -293,9 +336,32 @@ namespace Tesseract.WebDemo
       {
          resultPanel.Visible = false;
          inputPanel.Visible = true;
+         string fileName = HttpContext.Current.Session["output"].ToString();
+         _outputFile = Server.MapPath(_folderPath) + fileName;
+         File.Delete(_outputFile);
       }
 
-         
+      public void DownloadFile(object sender, EventArgs args)
+      {
+         string fileName = HttpContext.Current.Session["output"].ToString();
+         _outputFile = Server.MapPath(_folderPath) + fileName;
+         string text = string.Empty;
+         using (StreamReader sr = new StreamReader(_outputFile))
+         {
+            text = sr.ReadToEndAsync().Result;
+         }
+
+         Response.Clear();
+         Response.ClearHeaders();
+
+         Response.AddHeader("Content-Length", text.Length.ToString());
+         Response.ContentType = "text/plain";
+         Response.AppendHeader("content-disposition", "attachment;filename=\"" + fileName + "\"");
+
+         Response.Write(text);
+         Response.End();
+      }
+
       public VisionService CreateAuthorizedClient()
       {
          GoogleCredential credential = GoogleCredential.GetApplicationDefaultAsync().Result;
@@ -352,6 +418,7 @@ namespace Tesseract.WebDemo
       {
          this.restartButton.ServerClick += OnRestartClicked;
          this.submitFile.ServerClick += OnSubmitFileClicked;
+         this.downloadButton.ServerClick += DownloadFile;
       }
 
       #endregion
